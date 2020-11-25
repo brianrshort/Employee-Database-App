@@ -262,4 +262,48 @@ function updateDB() {
                 })
         }
         
+        const updateManager = () => {
+            return inquirer.prompt([
+                {
+                    type: "input",
+                    name: "empFirst",
+                    message: "What's the employee's first name that you want to update?"
+                },
+                {
+                    type: "input",
+                    name: "empLast",
+                    message: "What's the employee's last name that you want to update?"
+                },
+                {
+                    type: "input",
+                    name: "managerChange",
+                    message: "What is the ID number of the manager you would like assign to this employee?"
+                }
+            ]).then(function({empFirst, empLast, managerChange}) {
+                managerChanger(empFirst, empLast, managerChange);
+            })
+        
+        function managerChanger(firstname, lastname, managerchange) {
+            //console.log(firstname, lastname, managerchange);
+            var query = connection.query (
+                "UPDATE employee SET ? WHERE ? AND ?", [
+                {
+                    manager_id: managerchange
+                },
+                {
+                    first_name: firstname
+                },
+                {
+                    last_name: lastname
+                }
+            ],
+                function(err, res) {
+                    console.log(res);
+                    console.log(res.affectedRows + " employees updated! \n");
+                    employeeQuery();
+                }
+            )
+        }
+        }
+        
         
