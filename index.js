@@ -85,7 +85,7 @@ function updateDB() {
                 departmentBudget();
                 break;
             default:
-                console.log("Cash me outside!");
+                console.log("Thank you for visiting!");
                 break;
         }
     });
@@ -209,4 +209,18 @@ function updateDB() {
             })
         }
         
+        function insertRole(roleTitle, roleSalary, roleDepartment) {
+            var query = connection.query (
+                "INSERT INTO role SET ?",
+                    {
+                        title: roleTitle,
+                        salary: roleSalary,
+                        department_id: roleDepartment
+                    },
+                    function(err, res) {
+                        console.log(res.affectedRows + " roles added! \n")
+                        roleQuery();
+                    }
+            )
+        }
         
