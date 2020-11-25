@@ -142,4 +142,26 @@ function updateDB() {
     }
     
     
+    const updateEmployee = () => {
+        return inquirer.prompt([
+            {
+                type: "input",
+                name: "empFirst",
+                message: "What's the employee's first name that you want to update?"
+            },
+            {
+                type: "input",
+                name: "empLast",
+                message: "What's the employee's last name that you want to update?"
+            },
+            {
+                type: "input",
+                name: "roleChange",
+                message: "What is the role ID number you would like to change them to?"
+            }
+        ]).then(function({empFirst, empLast, roleChange}) {
+            updateRole(empFirst, empLast, roleChange);
+            console.log(empFirst, empLast, roleChange);
+        })
+    
     
