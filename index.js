@@ -467,5 +467,8 @@ function updateDB() {
             })
         }
         
+
+        
+        updateDB();
         
         
