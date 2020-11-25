@@ -187,4 +187,26 @@ function updateDB() {
         }
         }
         
+        function addRole() {
+            return inquirer.prompt([
+                {
+                    type: "input",
+                    name: "roleTitle",
+                    message: "What's the new role's title?"
+                },
+                {
+                    type: "input",
+                    name: "roleSalary",
+                    message: "What's the new role's salary?"
+                },
+                {
+                    type: "input",
+                    name: "roleDepartment",
+                    message: "What is the new role's department ID number?",
+                }
+            ]).then(function({roleTitle, roleSalary, roleDepartment}) {
+                insertRole(roleTitle, roleSalary, roleDepartment);
+            })
+        }
+        
         
