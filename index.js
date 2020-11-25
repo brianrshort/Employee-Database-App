@@ -460,7 +460,7 @@ const departmentBudget = () => {
         ],
             function(err, res) {
                 //console.log(res);
-                console.log(`The total budget for ${departmentName} is $${res[0].total}.`);
+                console.log(`The total budget for ${departmentName} is $${res[0].total}. \n`);
                 updateDB();
             }
         )
