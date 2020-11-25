@@ -405,4 +405,28 @@ function updateDB() {
             })
         }
         
+        const deleteDepartment = () => {
+            return inquirer.prompt([
+                {
+                    type: "input",
+                    name: "departmentName",
+                    message: "What's the name of the department that you want to delete?"
+                }
+            ]).then(function({departmentName}){
+                var query = connection.query (
+                    "DELETE FROM department WHERE ?", [
+                    {
+                        name: departmentName
+                    }
+                ],
+                    function(err, res) {
+                        //console.log(res);
+                        console.log(res.affectedRows + " departments removed! \n");
+                        departmentQuery();
+                    }
+                )
+              
+            })
+        }
+        
         
