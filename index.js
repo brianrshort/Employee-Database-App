@@ -441,4 +441,31 @@ function updateDB() {
             )
         }
         
+        const departmentBudget = () => {
+            return inquirer.prompt([
+                {
+                    type: "list",
+                    name: "departmentName",
+                    message: "What's the name of the department that you want to view?",
+                    choices: ["Operations", "Intelligence", "Fundraising", "Administration", "Human Resources", "Marketing", "Design", "Communications", "Editorial", "Social"]
+                }
+            ]).then(function({departmentName}){
+                var query = connection.query (
+                    "SELECT SUM(role.salary) AS 'total' FROM employee JOIN role ON employee.role_id = role.id JOIN department ON role.department_id = department.id  WHERE ?;",
+                [
+                    {
+                        name: departmentName
+                    }
+                ],
+                    function(err, res) {
+                        //console.log(res);
+                        console.log(`The total budget for ${departmentName} is $${res[0].total}.`);
+                        console.log("Pssst...hit 'CTRL-C' to exit!");
+                    }
+                )
+              
+            })
+        }
+        
+        
         
