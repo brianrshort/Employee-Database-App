@@ -224,3 +224,13 @@ function updateDB() {
             )
         }
         
+        function roleQuery() {
+            connection.query("SELECT role.id, role.title, role.salary, department.name FROM role JOIN department ON role.department_id = department.id ORDER BY role.id ASC", function(err, res) {
+                if (err) throw err;
+                    console.table(res);
+                    console.log("Pssst...hit 'CTRL-C' to exit!");
+            })
+        }
+        
+        
+        
