@@ -133,4 +133,13 @@ function updateDB() {
         });
     }
     
+    function employeeQuery() {
+        connection.query("WITH previous_query AS (SELECT id, first_name AS 'manager_first', last_name AS 'manager_last' FROM employee) SELECT employee.id, employee.first_name, employee.last_name, role.title, department.name, previous_query.manager_first, previous_query.manager_last FROM employee JOIN role ON employee.role_id = role.id JOIN department ON role.department_id = department.id JOIN previous_query ON employee.manager_id = previous_query.id ORDER BY employee.id ASC", function(err, res) {
+            if (err) throw err;
+                console.table(res);
+                console.log("Pssst...hit 'CTRL-C' to exit!");
+        })
+    }
+    
+    
     
