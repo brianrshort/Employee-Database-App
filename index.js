@@ -233,4 +233,33 @@ function updateDB() {
         }
         
         
+        function addDepartment() {
+            return inquirer.prompt([
+                {
+                    type: "input",
+                    name: "departmentTitle",
+                    message: "What's the new department's name?"
+                }
+            ]).then(function({departmentTitle}) {
+                var query = connection.query (
+                    "INSERT INTO department SET ?",
+                        {
+                            name: departmentTitle
+                        },
+                        function(err, res) {
+                            console.log(res.affectedRows + " departments added! \n")
+                            departmentQuery();
+                        }
+                )
+            })
+        }
+        
+        function departmentQuery() {
+                connection.query("SELECT * FROM department ORDER BY id ASC", function(err, res) {
+                    if (err) throw err;
+                        console.table(res);
+                        console.log("Pssst...hit 'CTRL-C' to exit!");
+                })
+        }
+        
         
