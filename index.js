@@ -306,4 +306,47 @@ function updateDB() {
         }
         }
         
+        const searchManager = () => {
+            return inquirer.prompt([
+                {
+                    type: "list",
+                    name: "manName",
+                    message: "Which manager's assignments would you like to review?",
+                    choices: ["Becky Stapawrecki", "Stavros Mackapoulotropos","Hameed Aziz"]
+                }
+            ]).then(function({manName}) {
+                console.log(manName);
+                switch(manName) {
+                    case "Becky Stapawrecki":
+                        managerAssignments("Becky", "Stapawrecki");
+                        break;
+                    case "Stavros Mackapoulotropos":
+                        managerAssignments("Stavros", "Mackapoulotropos");
+                        break;
+                    case "Hameed Aziz":
+                        managerAssignments("Hameed", "Aziz");
+                        break;
+                };
+            })
+        }
+        
+        function managerAssignments(firstName, lastName) {
+            var query = connection.query (
+                "WITH previous_result AS (SELECT first_name, last_name, id FROM employee WHERE ? AND ?) SELECT * FROM previous_result JOIN employee WHERE previous_result.id = employee.manager_id;", 
+                [
+                    {
+                        first_name: firstName
+                    },
+                    { 
+                        last_name: lastName
+                    }
+                ],
+            function(err, res) {
+                //console.log(res);
+                console.table(res);
+                console.log("Pssst...hit 'CTRL-C' to exit!");
+            }
+            )
+        }
+        
         
