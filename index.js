@@ -91,3 +91,46 @@ function updateDB() {
     });
     }
 
+
+    const addEmployee = () => {
+        return inquirer.prompt([
+            {
+                type: "input",
+                name: "firstName",
+                message: "What's the employee's first name?"
+            },
+            {
+                type: "input",
+                name: "lastName",
+                message: "What's the employee's last name?"
+            },
+            {
+                type: "input",
+                name: "roleName",
+                message: "What is the employee's role id?",
+            },
+            {
+                type: "input",
+                name: "manName",
+                message: "What is the employee's manager's employee id?",
+            },
+        ]).then(function({firstName, lastName, roleName, manName}) {
+            
+            var query = connection.query (
+                "INSERT INTO employee SET ?",
+                    {
+                        first_name: firstName,
+                        last_name: lastName,
+                        role_id: roleName, 
+                        manager_id: manName
+                    },
+                    function(err, res) {
+                        console.log(res.affectedRows + " employees added! \n")
+                        employeeQuery();
+                    }
+            )
+    
+        });
+    }
+    
+    
