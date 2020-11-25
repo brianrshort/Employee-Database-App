@@ -164,4 +164,27 @@ function updateDB() {
             console.log(empFirst, empLast, roleChange);
         })
     
-    
+        function updateRole(firstname, lastname, rolechange) {
+            console.log(firstname, lastname, rolechange);
+            var query = connection.query (
+                "UPDATE employee SET ? WHERE ? AND ?", [
+                {
+                    role_id: rolechange
+                },
+                {
+                    first_name: firstname
+                },
+                {
+                    last_name: lastname
+                }
+            ],
+                function(err, res) {
+                    console.log(res);
+                    console.log(res.affectedRows + " employees updated! \n");
+                    employeeQuery();
+                }
+            )
+        }
+        }
+        
+        
