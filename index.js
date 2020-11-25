@@ -1,3 +1,5 @@
+//Pulling in inquirer to execute the command line prompts; mysql to access the database,
+//and console.table to organize and display the data
 const inquirer = require("inquirer");
 const mysql = require("mysql");
 const cTable = require("console.table");
@@ -16,6 +18,8 @@ var connection = mysql.createConnection({
   database: "employee_tracker_DB"
 });
 
+//The main function, updateDB() prompts the user to choose from a list of possible actions.
+//The function is called again after those actions until the user decides to quit the program.
 function updateDB() {
     inquirer.prompt([
         {
@@ -93,7 +97,7 @@ function updateDB() {
     });
     }
 
-
+//A function to add a new row to the employee table in the employee tracker database.
 const addEmployee = () => {
     return inquirer.prompt([
         {
@@ -135,6 +139,9 @@ const addEmployee = () => {
     });
 }
     
+//A function to display information on employees from the employee table in the employee tracker database.
+//Note that the function uses joins to display the actual role, department, and manager names not just the 
+//relevant foreign key IDS.
 function employeeQuery() {
     connection.query("WITH previous_query AS (SELECT id, first_name AS 'manager_first', last_name AS 'manager_last' FROM employee) SELECT employee.id, employee.first_name, employee.last_name, role.title, department.name, previous_query.manager_first, previous_query.manager_last FROM employee JOIN role ON employee.role_id = role.id JOIN department ON role.department_id = department.id JOIN previous_query ON employee.manager_id = previous_query.id ORDER BY employee.id ASC", function(err, res) {
         if (err) throw err;
@@ -143,7 +150,7 @@ function employeeQuery() {
     })
 }
 
-
+//A function to update the role_id in an individual row in the employee table.
 const updateEmployee = () => {
     return inquirer.prompt([
         {
@@ -189,6 +196,7 @@ const updateEmployee = () => {
     }
 }
     
+//A function that gets user input to define a new row in the role table in the employee tracker database.
 function addRole() {
     return inquirer.prompt([
         {
@@ -211,6 +219,7 @@ function addRole() {
     })
 }
 
+//A function that submits user input as a query to add a row to the row table in the employee tracker database. 
 function insertRole(roleTitle, roleSalary, roleDepartment) {
     var query = connection.query (
         "INSERT INTO role SET ?",
@@ -226,6 +235,8 @@ function insertRole(roleTitle, roleSalary, roleDepartment) {
     )
 }
 
+//A function to organize and display information from the role table in the employee tracker database.
+//Note that a join is used to display the department name and not just the relevant foreign key ID.
 function roleQuery() {
     connection.query("SELECT role.id, role.title, role.salary, department.name FROM role JOIN department ON role.department_id = department.id ORDER BY role.id ASC", function(err, res) {
         if (err) throw err;
@@ -234,7 +245,7 @@ function roleQuery() {
     })
 }
 
-
+//A function to gather user input and insert a row in the department table in the employee tracker database. 
 function addDepartment() {
     return inquirer.prompt([
         {
@@ -256,6 +267,7 @@ function addDepartment() {
     })
 }
 
+//A function to get and display information on departments from the employee tracker database. 
 function departmentQuery() {
         connection.query("SELECT * FROM department ORDER BY id ASC", function(err, res) {
             if (err) throw err;
@@ -264,6 +276,7 @@ function departmentQuery() {
         })
 }
 
+//A function to gather information from the user to update an individual employee's manager assignment ID.
 const updateManager = () => {
     return inquirer.prompt([
         {
@@ -286,6 +299,7 @@ const updateManager = () => {
     })
 }
 
+//A function that submits user input to reassign an employee to a new manager.
 function managerChanger(firstname, lastname, managerchange) {
     //console.log(firstname, lastname, managerchange);
     var query = connection.query (
@@ -308,7 +322,7 @@ function managerChanger(firstname, lastname, managerchange) {
     )
 }
 
-
+//A function to gather user input to run a search on what employees report to which managers. 
 const searchManager = () => {
     return inquirer.prompt([
         {
@@ -333,6 +347,7 @@ const searchManager = () => {
     })
 }
 
+//A function that gets and displays information on manager assignments. 
 function managerAssignments(firstName, lastName) {
     var query = connection.query (
         "WITH previous_result AS (SELECT first_name, last_name, id FROM employee WHERE ? AND ?) SELECT * FROM previous_result JOIN employee WHERE previous_result.id = employee.manager_id;", 
@@ -352,6 +367,7 @@ function managerAssignments(firstName, lastName) {
     )
 }
 
+//A function to delete a row from the employee table in the employee tracker database.
 const deleteEmployee = () => {
     return inquirer.prompt([
         {
@@ -384,6 +400,7 @@ const deleteEmployee = () => {
     })
 }
 
+//A function to delete a role from the employee tracker database.
 const deleteRole = () => {
     return inquirer.prompt([
         {
@@ -407,6 +424,7 @@ const deleteRole = () => {
     })
 }
 
+//A function that deletes a row from the department table of the employee tracker databse. 
 const deleteDepartment = () => {
     return inquirer.prompt([
         {
@@ -430,6 +448,8 @@ const deleteDepartment = () => {
     })
 }
 
+//A function to view the total budget based on employee salaries for all deparments.
+//Note! This wasn't part of the assignment, just something I was curious about...
 const viewBudget = () => {
     var query = connection.query (
         "SELECT SUM(salary) AS 'total' FROM employee JOIN role ON employee.role_id = role.id;", [
@@ -442,6 +462,7 @@ const viewBudget = () => {
     )
 }
 
+//A function to get a total budget based on salaries for individual departments. 
 const departmentBudget = () => {
     return inquirer.prompt([
         {
@@ -467,6 +488,7 @@ const departmentBudget = () => {
     })
 }
         
+//Call our initial update database function to begin the program. 
 updateDB();
         
         
