@@ -381,4 +381,28 @@ function updateDB() {
             })
         }
         
+        const deleteRole = () => {
+            return inquirer.prompt([
+                {
+                    type: "input",
+                    name: "roleName",
+                    message: "What's the name of the role that you want to delete?"
+                }
+            ]).then(function({roleName}){
+                var query = connection.query (
+                    "DELETE FROM role WHERE ?", [
+                    {
+                        title: roleName
+                    }
+                ],
+                    function(err, res) {
+                        //console.log(res);
+                        console.log(res.affectedRows + " roles removed! \n");
+                        roleQuery();
+                    }
+                )
+              
+            })
+        }
+        
         
