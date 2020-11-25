@@ -429,4 +429,16 @@ function updateDB() {
             })
         }
         
+        const viewBudget = () => {
+            var query = connection.query (
+                "SELECT SUM(salary) AS 'total' FROM employee JOIN role ON employee.role_id = role.id;", [
+            ],
+                function(err, res) {
+                    //console.log(res[0]);
+                    console.log("The total utilized budget is $" + res[0].total + ". \n");
+                    console.log("Pssst...hit 'CTRL-C' to exit!");
+                }
+            )
+        }
+        
         
