@@ -349,4 +349,36 @@ function updateDB() {
             )
         }
         
+        const deleteEmployee = () => {
+            return inquirer.prompt([
+                {
+                    type: "input",
+                    name: "empFirst",
+                    message: "What's the employee's first name that you want to delete?"
+                },
+                {
+                    type: "input",
+                    name: "empLast",
+                    message: "What's the employee's last name that you want to delete?"
+                }
+            ]).then(function({empFirst, empLast}){
+                var query = connection.query (
+                    "DELETE FROM employee WHERE ? AND ?", [
+                    {
+                        first_name: empFirst
+                    },
+                    {
+                        last_name: empLast
+                    }
+                ],
+                    function(err, res) {
+                        //console.log(res);
+                        console.log(res.affectedRows + " employees removed! \n");
+                        employeeQuery();
+                    }
+                )
+              
+            })
+        }
+        
         
