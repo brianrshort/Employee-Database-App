@@ -10,8 +10,6 @@ Here is a gif of the final working process for the application.
 
 <img src="/assets/Images/App.gif?raw=true" width="400px">
 
-![Gif of final application](https://brianrshort.github.io/Employee-Database-App/assets/Images/App.gif)
-
 # Tech/Framwork
 This application uses MySql, node.js, SQL, javascript, and CLI prompts. 
 
