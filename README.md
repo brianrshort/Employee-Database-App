@@ -7,6 +7,9 @@ This project was completed as part of the Michigan State University/Trilogy Web 
 # Screenshots
 Here is a gif of the final working process for the application.
 
+
+<img src="/assets/Images/App.gif?raw=true" width="400px">
+
 ![Gif of final application](https://brianrshort.github.io/Employee-Database-App/assets/Images/App.gif)
 
 # Tech/Framwork
