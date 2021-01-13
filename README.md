@@ -18,6 +18,11 @@ To try the app out, do an npm install to pull out the inquirer, mysql, and conso
 
 Also, make sure you run the SQL code from seed.sql in MySQL or a similar program to create the database that the app will pull from. There are around 10 items in each of the three database tables. 
 
-# Credits and License
-Creator: https://github.com/brianrshort 
+# License
 License: MIT
+
+# Creator
+Github -- https://github.com/brianrshort 
+
+# Contact
+LinkedIn -- https://www.linkedin.com/in/brian-short-b3017320/
